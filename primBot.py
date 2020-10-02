@@ -4,6 +4,7 @@ import os
 from itertools import cycle
 import json
 
+
 def get_prefix(client, message):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
@@ -21,17 +22,19 @@ async def on_ready():
     # await self.client.change_presence(status=discord.Status.idle, activity=discord.Game('$help'))
     print('I am here!')
 
+
 @client.event
 async def on_guild_join(guild):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
 
-    prefixes[str(guild.id)] = '$' 
+    prefixes[str(guild.id)] = '$'
 
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
 
     print(f'joined {guild}')
+
 
 @client.event
 async def on_guild_remove(guild):
@@ -45,6 +48,7 @@ async def on_guild_remove(guild):
 
     print(f'removed from {guild}')
 
+
 @client.command()
 async def changeprefix(ctx, prefix):
     with open('prefixes.json', 'r') as f:
@@ -56,6 +60,7 @@ async def changeprefix(ctx, prefix):
         json.dump(prefixes, f, indent=4)
 
     await ctx.send(f'Prefix changed to {prefix}')
+
 
 @tasks.loop(seconds=5)
 async def change_status():
@@ -84,4 +89,4 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
-client.run('NzU4NzI3NTk2MzE3MDgxNjQw.X2zKIw.IOHjs7yMhRB8Ld14QnMCebQD5Us')
+client.run('TOKEN')
